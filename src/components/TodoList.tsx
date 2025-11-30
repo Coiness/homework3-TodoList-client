@@ -20,7 +20,8 @@ export function TodoList() {
       setError(null);
       const data = await todoApi.getAllTodos();
       setTodos(data);
-    } catch {
+    } catch (error) {
+      console.error('Failed to load todos:', error);
       setError('Failed to load todos. Please check if the API server is running.');
     } finally {
       setLoading(false);
@@ -41,7 +42,8 @@ export function TodoList() {
       const newTodo = await todoApi.createTodo({ title: newTodoTitle.trim() });
       setTodos((prev) => [...prev, newTodo]);
       setNewTodoTitle('');
-    } catch {
+    } catch (error) {
+      console.error('Failed to create todo:', error);
       setError('Failed to create todo.');
     }
   };
@@ -54,7 +56,8 @@ export function TodoList() {
       setTodos((prev) =>
         prev.map((todo) => (todo.id === id ? updatedTodo : todo))
       );
-    } catch {
+    } catch (error) {
+      console.error('Failed to toggle todo:', error);
       setError('Failed to update todo.');
     }
   };
@@ -67,7 +70,8 @@ export function TodoList() {
       setTodos((prev) =>
         prev.map((todo) => (todo.id === id ? updatedTodo : todo))
       );
-    } catch {
+    } catch (error) {
+      console.error('Failed to update todo:', error);
       setError('Failed to update todo.');
     }
   };
@@ -78,7 +82,8 @@ export function TodoList() {
       setError(null);
       await todoApi.deleteTodo(id);
       setTodos((prev) => prev.filter((todo) => todo.id !== id));
-    } catch {
+    } catch (error) {
+      console.error('Failed to delete todo:', error);
       setError('Failed to delete todo.');
     }
   };
